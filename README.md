@@ -4,6 +4,8 @@
 
 This project demonstrates a secure Salesforce-to-Salesforce integration where Cases created in Org A are sent to Org B using OAuth-based authentication and REST Apex.
 
+To understand the complete implementation and step-by-step explanation, please refer to the detailed Medium blog: https://medium.com/@ambarishbhagawati8969/integrating-two-salesforce-orgs-using-auth-provider-named-credentials-rest-apex-963def7a631b
+
 The integration follows Salesforce-recommended best practices by leveraging:
 
 * Connected App (Org B)
@@ -43,6 +45,7 @@ Authentication is handled using OAuth 2.0, ensuring secure communication between
 <img width="900" height="700" alt="Org to Org Architecture Daigram" src="https://github.com/user-attachments/assets/f38f36c0-13af-42ba-8e03-d74438fc2c47" />
 
 🔐 Authentication & Security Design
+
 1️⃣ Connected App (Org B)
 
 * Acts as the OAuth client
