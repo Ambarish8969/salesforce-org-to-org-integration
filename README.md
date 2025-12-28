@@ -71,8 +71,11 @@ Authentication is handled using OAuth 2.0, ensuring secure communication between
 * Automatically injects access tokens during callouts
 
 This design ensures:
+
 ✔ No credentials in code
+
 ✔ Centralized authentication
+
 ✔ Easy token refresh & maintenance
 
 🔄 Integration Flow
@@ -112,7 +115,7 @@ Key Concepts Used
 * Bulk-safe processing
 
 📌 Source Code
-org-a-source/apex/SendCasesToOrgBService.cls
+org-a-source/SendCasesToOrgBService.cls
 
 📥 Org B – Target Org Logic
 
@@ -137,7 +140,7 @@ Key Concepts Used
 * Error handling
 
 📌 Source Code
-org-b-target/apex/CaseInboundService.cls
+org-b-source/CaseInboundService.cls
 
 🔍 Verifying the Integration Output
 
