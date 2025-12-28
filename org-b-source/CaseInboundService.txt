@@ -1,0 +1,39 @@
+@RestResource(urlMapping='/records/createcases')
+global with sharing class CaseInboundService {
+
+    @HttpPost
+    global static void createCases() {
+
+        try {
+            String body = RestContext.request.requestBody.toString();
+
+            Map<String, Object> payload =
+                (Map<String, Object>) JSON.deserializeUntyped(body);
+
+            List<Object> casesData = (List<Object>) payload.get('cases');
+            List<Case> casesToInsert = new List<Case>();
+
+            for(Object obj : casesData){
+                Map<String, Object> cMap = (Map<String, Object>) obj;
+
+                casesToInsert.add(new Case(
+                    Subject = (String) cMap.get('Subject'),
+                    Origin = (String) cMap.get('Origin'),
+                    Status = (String) cMap.get('Status'),
+                    Description = (String) cMap.get('Description')
+                ));
+            }
+
+            insert casesToInsert;
+
+            RestContext.response.statusCode = 201;
+            RestContext.response.responseBody =
+                Blob.valueOf(casesToInsert.size() + ' cases created successfully.');
+
+        } catch(Exception e) {
+            RestContext.response.statusCode = 400;
+            RestContext.response.responseBody =
+                Blob.valueOf('Error: ' + e.getMessage());
+        }
+    }
+}

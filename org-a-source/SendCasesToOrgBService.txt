@@ -1,0 +1,45 @@
+public class SendCasesToOrgBService {
+
+    public static void sendCreatedCases() {
+
+        String endpoint =
+            'callout:OrgB_Named_Credential/services/apexrest/records/createcases';
+
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(endpoint);
+        req.setMethod('POST');
+        req.setHeader('Content-Type', 'application/json');
+
+        List<Case> casesToday = [
+            SELECT Subject, Origin, Status, Description
+            FROM Case
+            WHERE CreatedDate = TODAY
+        ];
+
+        if(casesToday.isEmpty()){
+            return;
+        }
+
+        List<Map<String, Object>> payloadCases = new List<Map<String, Object>>();
+
+        for(Case c : casesToday){
+            payloadCases.add(new Map<String, Object>{
+                'Subject' => c.Subject,
+                'Origin' => c.Origin,
+                'Status' => c.Status,
+                'Description' => c.Description
+            });
+        }
+
+        Map<String, Object> wrapper = new Map<String, Object>{
+            'cases' => payloadCases
+        };
+
+        req.setBody(JSON.serialize(wrapper));
+
+        Http http = new Http();
+        HttpResponse res = http.send(req);
+
+        System.debug('Response from Org B: ' + res.getBody());
+    }
+}
